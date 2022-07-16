@@ -3,6 +3,10 @@ from django.contrib.auth import get_user_model
 
 
 # Create your models here.
+class ActiveLinkManager(models.Manager):
+    def get_queryset(self):
+        qs = super().get_queryset()
+        return qs.filter(active=True)
 
 
 class Link(models.Model):
@@ -16,4 +20,4 @@ class Link(models.Model):
     created_date = models.DateTimeField(auto_now_add=True)
     active = models.BooleanField(default=True)
     objects = models.Manager()
-    public = models.ActiveLinkManager()
+    public = ActiveLinkManager()
